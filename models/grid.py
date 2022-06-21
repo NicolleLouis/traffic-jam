@@ -6,3 +6,9 @@ class Grid:
 
     def add_object(self, grid_object):
         self.objects.append(grid_object)
+
+    def is_position_empty(self, position):
+        for grid_object in self.objects:
+            if grid_object.position == position:
+                return False
+        return True
