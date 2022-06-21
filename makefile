@@ -1,2 +1,2 @@
 test:
-	python scripts/test.py
+	python test.py
