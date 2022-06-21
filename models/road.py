@@ -17,3 +17,17 @@ class Road:
 
     def add_car(self, car):
         self.cars.append(car)
+
+    def next_position(self, position):
+        for index, potential_position in enumerate(self.positions):
+            if position == potential_position:
+                try:
+                    return self.positions[index + 1]
+                except IndexError:
+                    raise Exception("Last position of road")
+        raise Exception("Position not in road")
+
+    def display_data(self):
+        print(f"Road Length: {len(self.positions)}")
+        for position in self.positions:
+            print(position)
