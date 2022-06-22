@@ -1,6 +1,8 @@
 from typing import TYPE_CHECKING, Optional
 
-from services.road_position_generator import RoadPositionGenerator
+from services.road.road_car_arrived import RoadCarArrivedService
+from services.road.road_car_random_creation import RoadCarRandomCreationService
+from services.road.road_position_generator import RoadPositionGenerator
 
 if TYPE_CHECKING:
     from models import Grid, Position, TrafficLight, Car
@@ -13,15 +15,28 @@ class Road:
             x=x,
             y=y,
         )
+        self.grid = grid
         self.cars: list['Car'] = []
         self.traffic_lights: list['TrafficLight'] = []
+        self.car_joining_road = 0
+        self.car_leaving_road = 0
+
+        self.car_arrived_service = RoadCarArrivedService(self)
+        self.car_creation_service = RoadCarRandomCreationService(self)
 
     def step(self) -> None:
         for traffic_light in self.traffic_lights:
             traffic_light.step()
+        self.car_creation_service.generate_car()
+        self.car_arrived_service.remove_car_on_last_position()
 
     def add_car(self, car: 'Car') -> None:
         self.cars.append(car)
+        self.car_joining_road += 1
+
+    def remove_car(self, car: 'Car') -> None:
+        self.cars.remove(car)
+        self.car_leaving_road += 1
 
     def add_traffic_light(self, traffic_light: 'TrafficLight') -> None:
         self.traffic_lights.append(traffic_light)
