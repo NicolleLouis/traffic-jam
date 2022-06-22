@@ -13,12 +13,14 @@ class GameDisplayService:
 
     def display_information(
             self,
-            display_road=False,
-            display_grid=True,
-            road_display_context=False,
-            road_display_car=False,
-            road_display_traffic_light=False,
-    ):
+            turn_number: int,
+            display_road: bool = False,
+            display_grid: bool = True,
+            road_display_context: bool = False,
+            road_display_car: bool = False,
+            road_display_traffic_light: bool = False,
+    ) -> None:
+        print(f"Turn Number: {turn_number}")
         if display_road:
             self.display_road_data(
                 road_display_context=road_display_context,
@@ -33,7 +35,7 @@ class GameDisplayService:
             road_display_context=False,
             road_display_car=False,
             road_display_traffic_light=False,
-    ):
+    ) -> None:
         print("Roads Data:")
         print(f"Roads Number: {len(self.game.roads)}")
         for index, road in enumerate(self.game.roads):
@@ -45,5 +47,5 @@ class GameDisplayService:
                 display_traffic_light=road_display_traffic_light,
             )
 
-    def display_grid(self):
+    def display_grid(self) -> None:
         GridDisplayService(self.game.grid).display_grid()

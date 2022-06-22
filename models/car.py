@@ -1,3 +1,6 @@
+from constants.traffic_light_state import TrafficLightState
+
+
 class Car:
     def __init__(self, road, grid, position):
         self.road = road
@@ -8,7 +11,8 @@ class Car:
         self.road.add_car(self)
 
     def step(self):
-        self.move()
+        if self.can_move():
+            self.move()
 
     def move(self):
         try:
@@ -18,3 +22,12 @@ class Car:
             return
         if self.grid.is_position_empty(next_position):
             self.position = next_position
+
+    def can_move(self):
+        traffic_light = self.road.get_traffic_light(self.position)
+        if traffic_light is None:
+            return True
+        else:
+            if traffic_light.state in [TrafficLightState.Green, TrafficLightState.Yellow]:
+                return True
+        return False

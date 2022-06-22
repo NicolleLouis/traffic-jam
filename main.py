@@ -1,3 +1,4 @@
+from constants.traffic_light_state import TrafficLightState
 from models import Road, Car, TrafficLight
 from models.game import Game
 
@@ -27,7 +28,13 @@ Car(
 
 TrafficLight(
     road=game.roads[0],
-    position=game.roads[0].positions[4]
+    position=game.roads[0].positions[3]
 )
 
-game.run()
+TrafficLight(
+    road=game.roads[1],
+    position=game.roads[0].positions[3],
+    initial_state=TrafficLightState.Red
+)
+
+game.run(number_of_turns=20, verbose=True)

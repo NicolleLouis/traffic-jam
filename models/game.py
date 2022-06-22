@@ -17,11 +17,12 @@ class Game:
         for road in self.roads:
             road.step()
 
-    def run(self, number_of_turns=10):
+    def run(self, number_of_turns=10, verbose=False):
         for turn_number in range(number_of_turns):
-            print(f"Turn Number: {turn_number}")
-            self.display_service.display_information(
-                display_road=True,
-                road_display_traffic_light=True,
-            )
+            if verbose:
+                self.display_service.display_information(
+                    turn_number=turn_number,
+                    display_road=True,
+                    road_display_traffic_light=True,
+                )
             self.step()
