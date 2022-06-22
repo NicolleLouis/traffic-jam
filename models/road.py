@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Optional
 
-from services.data_storage.road import RoadDataStorageService
+from services.data_storage.road import RoadDataStorage
 from services.road.road_car_arrived import RoadCarArrivedService
 from services.road.road_car_random_creation import RoadCarRandomCreationService
 from services.road.road_position_generator import RoadPositionGenerator
@@ -10,11 +10,12 @@ if TYPE_CHECKING:
 
 
 class Road:
-    def __init__(self, grid: 'Grid', x=None, y=None):
+    def __init__(self, grid: 'Grid', x=None, y=None, reverse=False):
         self.positions: list['Position'] = RoadPositionGenerator.generate_straight_line(
             grid=grid,
             x=x,
             y=y,
+            reverse=reverse,
         )
         self.grid = grid
         self.cars: list['Car'] = []
@@ -23,8 +24,8 @@ class Road:
         self.car_leaving_road = 0
 
         self.car_arrived_service = RoadCarArrivedService(self)
-        self.car_creation_service = RoadCarRandomCreationService(self)
-        self.data_storage = RoadDataStorageService(self)
+        self.car_creation_service = RoadCarRandomCreationService(self, probability=75)
+        self.data_storage = RoadDataStorage(self)
 
     def step(self) -> None:
         for traffic_light in self.traffic_lights:

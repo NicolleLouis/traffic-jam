@@ -22,21 +22,23 @@ class RoadPositionGenerator:
                 raise Exception("Axis outside the grid")
 
     @staticmethod
-    def generate_straight_line(grid: 'Grid', x=None, y=None):
+    def generate_straight_line(grid: 'Grid', x=None, y=None, reverse=False):
+        road_positions = []
         size = grid.width
         RoadPositionGenerator.check_data_validity(grid=grid, x=x, y=y)
         if y is not None:
-            return list(
+            road_positions = list(
                 map(
                     lambda new_x: Position(new_x, y),
                     range(size)
                 )
             )
         if x is not None:
-            return list(
+            road_positions = list(
                 map(
                     lambda new_y: Position(x, new_y),
                     range(size)
                 )
             )
-
+        road_positions.reverse()
+        return road_positions

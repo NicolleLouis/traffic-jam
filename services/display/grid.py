@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 from models import Position
 
 
-class GridDisplayService:
+class GridDisplay:
     def __init__(self, grid: 'Grid'):
         self.grid: 'Grid' = grid
 

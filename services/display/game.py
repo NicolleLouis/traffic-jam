@@ -1,13 +1,14 @@
 from typing import TYPE_CHECKING
 
-from services.display.grid import GridDisplayService
-from services.display.road import RoadDisplayService
+from services.display.data_storage.road import RoadDataDisplay
+from services.display.grid import GridDisplay
+from services.display.road import RoadDisplay
 
 if TYPE_CHECKING:
     from models import Game
 
 
-class GameDisplayService:
+class GameDisplay:
     def __init__(self, game: 'Game'):
         self.game: 'Game' = game
 
@@ -41,16 +42,19 @@ class GameDisplayService:
         for index, road in enumerate(self.game.roads):
             print("#####")
             print(f"Road Number {index}:")
-            RoadDisplayService(road).display_data(
+            RoadDisplay(road).display_data(
                 display_context=road_display_context,
                 display_car=road_display_car,
                 display_traffic_light=road_display_traffic_light,
             )
 
     def display_grid(self) -> None:
-        GridDisplayService(self.game.grid).display_grid()
+        GridDisplay(self.game.grid).display_grid()
 
-    def display_final_data(self):
-        for index, road in enumerate(self.game.roads):
-            print(f"Road {index}: ")
-            RoadDisplayService(road).display_final_data()
+    def display_final_data(self, verbose=True):
+        if verbose:
+            for index, road in enumerate(self.game.roads):
+                print(f"Road {index}: ")
+                RoadDisplay(road).display_final_data()
+        print("All road data")
+        RoadDataDisplay(self.game.road_data_storage).display_car_travel_time()

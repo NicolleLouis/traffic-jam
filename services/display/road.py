@@ -1,10 +1,12 @@
 from typing import TYPE_CHECKING
 
+from services.display.data_storage.road import RoadDataDisplay
+
 if TYPE_CHECKING:
     from models import Road
 
 
-class RoadDisplayService:
+class RoadDisplay:
     def __init__(self, road: 'Road'):
         self.road: 'Road' = road
 
@@ -43,4 +45,4 @@ class RoadDisplayService:
             traffic_light.display_data()
 
     def display_car_travel_time(self):
-        self.road.data_storage.display_car_travel_time()
+        RoadDataDisplay(self.road.data_storage).display_car_travel_time()
