@@ -12,11 +12,13 @@ class Car:
         self.road: 'Road' = road
         self.grid: 'Grid' = self.road.grid
         self.position: 'Position' = position
+        self.time_traveled = 0
 
         self.grid.add_object(self)
         self.road.add_car(self)
 
     def step(self) -> None:
+        self.time_traveled += 1
         if self.is_traffic_light_blocking():
             return
         next_position = self.next_position()

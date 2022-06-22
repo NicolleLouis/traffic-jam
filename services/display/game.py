@@ -49,3 +49,8 @@ class GameDisplayService:
 
     def display_grid(self) -> None:
         GridDisplayService(self.game.grid).display_grid()
+
+    def display_final_data(self):
+        for index, road in enumerate(self.game.roads):
+            print(f"Road {index}: ")
+            RoadDisplayService(road).display_final_data()

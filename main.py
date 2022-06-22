@@ -2,7 +2,7 @@ from constants.traffic_light_state import TrafficLightState
 from models import Road, TrafficLight
 from models.game import Game
 
-game = Game()
+game = Game(verbose=False)
 game.add_road(Road(grid=game.grid, x=4))
 game.add_road(Road(grid=game.grid, y=4))
 
@@ -16,4 +16,4 @@ TrafficLight(
     initial_state=TrafficLightState.Red
 )
 
-game.run(number_of_turns=100, verbose=True)
+game.run(number_of_turns=1000)

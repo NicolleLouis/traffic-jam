@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING, Optional
 
+from services.data_storage.road import RoadDataStorageService
 from services.road.road_car_arrived import RoadCarArrivedService
 from services.road.road_car_random_creation import RoadCarRandomCreationService
 from services.road.road_position_generator import RoadPositionGenerator
@@ -23,6 +24,7 @@ class Road:
 
         self.car_arrived_service = RoadCarArrivedService(self)
         self.car_creation_service = RoadCarRandomCreationService(self)
+        self.data_storage = RoadDataStorageService(self)
 
     def step(self) -> None:
         for traffic_light in self.traffic_lights:
@@ -37,6 +39,7 @@ class Road:
     def remove_car(self, car: 'Car') -> None:
         self.cars.remove(car)
         self.car_leaving_road += 1
+        self.data_storage.add_car_travel_time(car)
 
     def add_traffic_light(self, traffic_light: 'TrafficLight') -> None:
         self.traffic_lights.append(traffic_light)

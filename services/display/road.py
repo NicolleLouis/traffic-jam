@@ -21,6 +21,12 @@ class RoadDisplayService:
         if display_traffic_light:
             self.display_traffic_light()
 
+    def display_final_data(self, verbose=False):
+        if verbose:
+            print(f'Cars created: {self.road.car_joining_road}')
+            print(f'Cars arrived: {self.road.car_leaving_road}')
+        self.display_car_travel_time()
+
     def display_context(self):
         print(f"Road Length: {len(self.road.positions)}")
         for position in self.road.positions:
@@ -35,3 +41,6 @@ class RoadDisplayService:
         print(f"Traffic light number: {len(self.road.traffic_lights)}")
         for traffic_light in self.road.traffic_lights:
             traffic_light.display_data()
+
+    def display_car_travel_time(self):
+        self.road.data_storage.display_car_travel_time()
